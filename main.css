@@ -1,7 +1,7 @@
 .grid-container {
   	display: grid;
   	grid-template-columns: auto auto auto auto;
-  	background-color: #FFFFFF;
+  	/*background-color: #FFFFFF;*/
   	padding: 10px;
 }
 .titleContainer {
@@ -28,8 +28,17 @@
 	font-weight: bold;
 	image-rendering: -moz-crisp-edges;
 }
-.buttonContainer {
+.achievementContainerup {
 	background-color: rgb(255,255,255,0.6);
+	width: 50%;
+	padding: 20px;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	image-rendering: -moz-crisp-edges;
+}
+.buttonContainer {
+	/*background-color: rgb(255,255,255,0.6);*/
 	width: 30%;
 	padding: 20px;
 	border-radius: 10px;
@@ -71,14 +80,15 @@
 	color: white;
 	position: absolute;
 }
-	
-	
-.shopButton{
-	background-color : #d9d9d9;	
+
+
+.shopButton {
+	background-color: rgb(0,0,0,0.05);
 	transition: all .2s ease-in-out;
 	border-radius: 10px;
 	width: 100%;
 	margin: 10px 0px 10px 0px;
+	font-size: 12px;
 }
 .shopButton:hover{
 	background-color : #c7c7c7;	
@@ -87,11 +97,14 @@
 .shopButton #image{
 	width: 25%;
 }
-	.shopButton img {
+	/*.shopButton img {
 		height: 64px;
 		width: 64px;
 		image-rendering: -moz-crisp-edges;
-	}
+	}*/
+.pixelated {
+	image-rendering: pixelated;
+}
 .shopButton #nameAndCost p{
 	margin : 0px;
 	width : 60%;
@@ -105,29 +118,6 @@
 	font-family: roboto;
 	width: 15%;
 }
-
-.ageButton {
-	background-color: #FFFFFF;
-	transition: all .2s ease-in-out;
-	border-radius: 10px;
-	width: 25%;
-	margin: 10px 0px 10px 0px;
-}
-
-.ageButton:hover {
-	background-color: #ffd800;
-	transition: all .2s ease-in-out;
-}
-
-.ageButton #image {
-	width: 1%;
-}
-
-.ageButton img {
-	height: 32px;
-	width: 32px;
-}
-
 
 .unselectable {
 	-webkit-user-select : none;
@@ -226,6 +216,22 @@
 	}
 
 	.modal.hide {
+		visibility: collapse;
+	}
+
+.modalP {
+	display: none;
+	position: absolute;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 100;
+	font-size: 14px;
+}
+
+	.modalP.show {
+		display: block;
+	}
+
+	.modalP.hide {
 		visibility: collapse;
 	}
 

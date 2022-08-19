@@ -1,11 +1,13 @@
 // Create one dimensional array
-var chemicSeen = new Array(100);
+var isoSeen = new Array(100);
+var chemSeen = new Array(100).fill("false");
 // Loop to create 2D array using 1D array
-for (var i = 0; i < chemicSeen.length; i++) {
-	chemicSeen[i] = new Array(100).fill("false");
+for (var i = 0; i < isoSeen.length; i++) {
+	isoSeen[i] = new Array(100).fill("false");
 }
 //Hydrogen 1 is seen
-chemicSeen[1][0] = "true";
+isoSeen[1][0] = "true";
+chemSeen[1] = "true";
 
 var game = {
 	protonmax: 1,
@@ -16,19 +18,35 @@ var game = {
 	decayPartImage: ["proton.png", "neutron.png", "electron.png", "positron.png", "alpha.png", "gamma.png"],
 	decayPartColor: ["red", "blue", "cyan", "magenta", "green", "yellow"],
 	decayPartCount: [0, 0, 0, 0, 0, 0],
-	protonLim: [2,26,92,118],
+	protonLim: [2, 26, 92, 118, 200],
+	protonLimNumb: 0,
 	name: ["proton","neutron"],
 	image: ["proton.png", "neutron.png"],
 	color: ["red", "blue"],
-	chemicalName: ["neutron", "hydrogen", "helium", "lithium", "beryllium", "boron", "carbon", "nitrogen", "oxygen", "fluorine", "neon",
+	chemicalName: ["neutron", "hydrogen", "helium",
+		"lithium", "beryllium", "boron", "carbon", "nitrogen", "oxygen", "fluorine", "neon",
 		"sodium", "magnesium", "aluminium", "silicon", "phosphorus", "sulfur", "chlorine", "argon",
 		"potassium", "calcium", "scandium", "titane", "vanadium", "chromium", "manganese", "iron", "cobalt", "nickel", "copper", "zinc", "gallium", "germanium", "arsenic", "selenium", "bromine", "krypton",
 		"rubidium", "strontium", "yttrium", "zirconium", "niobium", "molybdenum", "technetium", "ruthenium", "rhodium", "palladium", "silver", "cadmium", "indium", "tin", "antimony", "tellurium", "iodine","xenon"],
-	chemicalSymbol: ["n", "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne",
+	chemicalSymbol: ["n", "H", "He",
+		"Li", "Be", "B", "C", "N", "O", "F", "Ne",
 		"Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar",
 		"K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr",
-		"Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh","Pd","Ag","Cd","In","Sn","Sb","Te","I","Xe"],
-	chemicalSeen: chemicSeen,
+		"Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe"],
+	chemicalPeriodicPos: [["", ""], [0, 0], [17, 0],
+		[0, 1], [1, 1], [12, 1], [13, 1], [14, 1], [15, 1], [16, 1], [17, 1],
+		[0, 2], [1, 2], [12, 2], [13, 2], [14, 2], [15, 2], [16, 2], [17, 2],
+		[0, 3], [1, 3], [2, 3], [3, 3], [4, 3], [5, 3], [6, 3], [7, 3], [8, 3], [9, 3], [10, 3], [11, 3], [12, 3], [13, 3], [14, 3], [15, 3], [16, 3], [17, 3],
+		[0, 4], [1, 4], [2, 4], [3, 4], [4, 4], [5, 4], [6, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4], [12, 4], [13, 4], [14, 4], [15, 4], [16, 4], [17, 4]],
+	chemicalPeriodicType: ["",0,1,
+		2, 3, 4, 0, 0, 0, 5, 1,
+		2, 3, 6, 4, 0, 0, 5, 1,
+		2, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 4, 4, 0, 5, 1,
+		2, 3, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 4, 4, 5, 1],
+	periodicTypeColor: ["rgb(0, 255, 0)", "rgb(0, 0, 255)", "rgb(255, 0, 0)", "rgb(255, 200, 0)", "rgb(0, 255, 255)", "rgb(255, 0, 255)", "rgb(100, 100, 255)", "rgb(255, 100, 100)"],
+	periodicTypeColorHover: ["rgb(100, 255, 100)", "rgb(100, 100, 255)", "rgb(255, 100, 100)", "rgb(255, 200, 100)", "rgb(100, 255, 255)", "rgb(255, 100, 255)", "rgb(150, 150, 255)", "rgb(255, 150, 150)"],
+	isotopSeen: isoSeen,
+	chemicalSeen: chemSeen,
 	chemicalDecay: [
 		/*n*/["", "b-", "", "", "", "", "", "", "", "", ""/*10*/, "", "", "", "", "", "", "", "", "", ""/*20*/, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 		/*H*/["stable", "stable", "b-", "n", "2n", "n", "2n", "", "", "", ""/*10*/, "", "", "", "", "", "", "", "", "", ""/*20*/, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
@@ -93,27 +111,26 @@ var game = {
 
 	addtonucleons: function (amount, index) {
 		if ((index == 0 && game.chemicalDecay[game.nucleonsCount[0] + 1][game.nucleonsCount[1]] !== "") || (index == 1 && game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1] + 1] !== "")) {
-			for (i = 0; i < game.protonLim.length; i++) {
-				if (index == 0 && (game.nucleonsCount[0] + 1 > game.protonLim[i] && factories.count[i] == 0)) {
-					alert("Not possible yet ! - Build a " + factories.name[i] + " if you want to go further !");
-					this.nucleonsCount[index] -= amount;
-					this.nucleonsTot -= amount;
-				}
+			if (index == 0 && game.nucleonsCount[0] + 1 > game.protonLim[game.protonLimNumb]) {
+				alert("Not possible yet ! - Build a " + factories.name[game.protonLimNumb] + " if you want to go further !");
 			}
-			this.nucleonsCount[index] += amount;
-			this.nucleonsTot += amount;
-			visitGrid(this.nucleonsCount[0], this.nucleonsCount[1], this.chemicalDecay[this.nucleonsCount[0]][this.nucleonsCount[1]], "false");
-			display.updateNucleons();
-			display.updateElement();
-			this.totalClicks++;
+			else {
+				this.nucleonsCount[index] += amount;
+				this.nucleonsTot += amount;
+				visitGrid(this.nucleonsCount[0], this.nucleonsCount[1], this.chemicalDecay[this.nucleonsCount[0]][this.nucleonsCount[1]], "false");
+				visitGridP(this.nucleonsCount[0]);
+				display.updateNucleons();
+				display.updateElement();
+				this.totalClicks++;
+			}
 		}
 	},
 };
 
 var factories = {
-	name: ["Star", "Novae", "Supernovae", "Collider"
+	name: ["Star", "Supernovae", "Collider", "Scifi expedition"
 	],
-	image: ["star.png", "novae.png", "supernovae.png", "collider.png"
+	image: ["star.png", "supernovae.png", "collider.png", "sciencefiction.png"
 	],
 	count: [0, 0, 0, 0
 	],
@@ -128,16 +145,19 @@ var factories = {
 
 	purchase: function (index) {
 		if (game.decayPartCount.every((v, i) => v >= this.cost[index][i])) {
-			for (i = 0; i < game.nucleonsCount.length; i++) {
+			if (this.count[index] == 0) {
+				game.protonLimNumb++;
+            }
+			for (i = 0; i < game.decayPartCount.length; i++) {
 				game.decayPartCount[i] -= this.cost[index][i];
 				this.cost[index][i] = Math.ceil(this.cost[index][i] * 1.1);
 			}
 			this.count[index]++;
 			this.totalCount++;
 			display.updateNucleons();
+			display.updateElement();
 			display.updateShop();
 			display.updateGrid();
-			display.updateElement();
 		}
 	}
 };
@@ -148,18 +168,18 @@ var achievement = {
 		"A thousand clicks",
 		"A million clicks",
 		"A billion clicks",
-		"First new element",
-		"Ten element later",
-		"A hundred element more",
-		"Thousands elements, okay ?",
+		"Welcome Helium !",
+		"Is that Neon there ?",
+		"Antimony or not to be ?",
+		"Hundred elements, can I do more ?",
+		"First new isotope",
+		"Ten isotopes later",
+		"A hundred isotopes more",
+		"Thousands isotopes, okay ?",
 		"And there was light",
 		"Nebulae light",
 		"Big cluster of light",
 		"Galaxy of light",
-		"KABOOM",
-		"KABOOOOOOOOOM",
-		"KABO^100M",
-		"KABO^1000M",
 		"Could I become a brown dwarf ?",
 		"Could I become a red dwarf ?",
 		"Could I become a neutron star ?",
@@ -167,15 +187,20 @@ var achievement = {
 		"Look at my LINAC !",
 		"Look at my cyclotron",
 		"Look at my LHC",
-		"Look at my FCC"
+		"Look at my FCC",
+		"Quest for unobtanium started",
+		"Crossed some blue guys on my way",
+		"Just need to burn this tree down",
+		"FINALLY ! The Unobtanium is mine !"
 	],
 	description: [
 		"Click 1 time", "Click 1000 times", "Click 1000000 times", "Click 1000000000 times",
-		"Obtain 1 element", "Obtain 10 elements", "Obtain 100 elements", "Obtain 1000 elements",
-		"Buy 1 star", "Buy 10 stars", "Buy 100 stars", "Buy 1000 stars",
-		"Buy 1 novae", "Buy 10 novaes", "Buy 100 novaes", "Buy 1000 novaes",
-		"Buy 1 supernovae", "Buy 10 supernovaes", "Buy 100 supernovaes", "Buy 1000 supernovaes",
-		"Buy 1 collider", "Buy 10 colliders", "Buy 100 colliders", "Buy 1000 colliders"
+		"Obtain 2 element", "Obtain 10 elements", "Obtain 50 elements", "Obtain 100 elements",
+		"Obtain 2 isotope", "Obtain 10 isotopes", "Obtain 100 isotopes", "Obtain 1000 isotopes",
+		"Build 1 star", "Build 10 stars", "Build 100 stars", "Build 1000 stars",
+		"Build 1 supernovae", "Build 10 supernovaes", "Build 100 supernovaes", "Build 1000 supernovaes",
+		"Build 1 collider", "Build 10 colliders", "Build 100 colliders", "Build 1000 colliders",
+		"Build 1 scifi expedition", "Build 10 scifi expeditions", "Build 100 scifi expeditions", "Build 1000 scifi expeditions"
 	],
 	image: [
 		"click-1.png",
@@ -184,16 +209,16 @@ var achievement = {
 		"click-1000000000.png",
 		"element-1.png",
 		"element-10.png",
+		"element-50.png",
 		"element-100.png",
-		"element-1000.png",
+		"isotope-1.png",
+		"isotope-10.png",
+		"isotope-100.png",
+		"isotope-1000.png",
 		"star-1.png",
 		"star-10.png",
 		"star-100.png",
 		"star-1000.png",
-		"novae-1.png",
-		"novae-10.png",
-		"novae-100.png",
-		"novae-1000.png",
 		"supernovae-1.png",
 		"supernovae-10.png",
 		"supernovae-100.png",
@@ -201,11 +226,16 @@ var achievement = {
 		"collider-1.png",
 		"collider-10.png",
 		"collider-100.png",
-		"collider-1000.png"
+		"collider-1000.png",
+		"fiction-1.png",
+		"fiction-10.png",
+		"fiction-100.png",
+		"fiction-1000.png"
 	],
 	type: [
 		"click", "click", "click", "click",
 		"element", "element", "element", "element",
+		"isotope", "isotope", "isotope", "isotope",
 		"factories", "factories", "factories", "factories",
 		"factories", "factories", "factories", "factories",
 		"factories", "factories", "factories", "factories",
@@ -213,6 +243,7 @@ var achievement = {
 	],
 	requirement: [
 		1, 1000, 1000000, 1000000000,
+		1, 10, 50, 100,
 		1, 10, 100, 1000,
 		1, 10, 100, 1000,
 		1, 10, 100, 1000,
@@ -222,12 +253,14 @@ var achievement = {
 	objectIndex: [
 		-1, -1, -1, -1,
 		-1, -1, -1, -1,
+		-1, -1, -1, -1,
 		0, 0, 0, 0,
 		1, 1, 1, 1,
 		2, 2, 2, 2,
 		3, 3, 3, 3
 	],
 	awarded: [
+		false, false, false, false,
 		false, false, false, false,
 		false, false, false, false,
 		false, false, false, false,
@@ -254,7 +287,7 @@ var display = {
 	updateShop: function () {
 		document.getElementById("shopContainer").innerHTML = "";
 		for (i = 0; i < factories.name.length; i++) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton" onclick="factories.purchase(' + i + ')"><tr><td id="image"><img src="images/' + factories.image[i] + '"></td><td if="nameAndCost"><p>' + factories.name[i] + '</p><p><span id="boxcost' + game.decayPartNameShort[0] + factories.name[i] + '">' + factories.cost[i][0] + '</p><p id="boxcost' + game.decayPartNameShort[1] + factories.name[i] + '">' + factories.cost[i][1] + '</p><p id="boxcost' + game.decayPartNameShort[2] + factories.name[i] + '">' + factories.cost[i][2] + '</p><p id="boxcost' + game.decayPartNameShort[3] + factories.name[i] + '">' + factories.cost[i][3] + '</p><p id="boxcost' + game.decayPartNameShort[4] + factories.name[i] + '">' + factories.cost[i][4] + '</p><p id="boxcost' + game.decayPartNameShort[5] + factories.name[i] + '">' + factories.cost[i][5] + '</p></td><td = id="amount"><span>' + factories.count[i] + '</span></td></tr></table>'
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton" onclick="factories.purchase(' + i + ')"><tr><td id="image"><img class="pixelated" src="images/' + factories.image[i] + '" height="64px" width="64px" image-rendering:pixelated></td><td if="nameAndCost"><p>' + factories.name[i] + '</p><p><span id="boxcost' + game.decayPartNameShort[0] + factories.name[i] + '">' + factories.cost[i][0] + ' <img src="images/' + game.decayPartImage[0] + '" height="10px" width="10px" ></p><p id="boxcost' + game.decayPartNameShort[1] + factories.name[i] + '">' + factories.cost[i][1] + ' <img src="images/' + game.decayPartImage[1] + '" height="10px" width="10px"></p><p id="boxcost' + game.decayPartNameShort[2] + factories.name[i] + '">' + factories.cost[i][2] + ' <img src="images/' + game.decayPartImage[2] + '" height="10px" width="10px"></p><p id="boxcost' + game.decayPartNameShort[3] + factories.name[i] + '">' + factories.cost[i][3] + ' <img src="images/' + game.decayPartImage[3] + '" height="10px" width="10px"></p><p id="boxcost' + game.decayPartNameShort[4] + factories.name[i] + '">' + factories.cost[i][4] + ' <img src="images/' + game.decayPartImage[4] + '" height="10px" width="10px"></p><p id="boxcost' + game.decayPartNameShort[5] + factories.name[i] + '">' + factories.cost[i][5] + ' <img src="images/' + game.decayPartImage[5] + '" height="10px" width="10px"></p></td><td = id="amount"><span>' + factories.count[i] + '</span></td></tr></table>'
 			for (j = 0; j < game.decayPartName.length; j++) {
 				document.getElementById('boxcost' + game.decayPartNameShort[j] + factories.name[i]).style.color = game.decayPartColor[j];
 			}
@@ -274,10 +307,9 @@ var display = {
 		if (game.nucleonsCount[0] > game.protonmax) {
 			game.protonmax = game.nucleonsCount[0];
 		}
-		document.getElementById("elementContainer").innerHTML = '<p>The highest element obtained is ' + game.chemicalName[game.protonmax] + ' (Z = ' + game.protonmax + ') </p>'
+		document.getElementById("elementContainer").innerHTML = '<p>The highest element obtained is ' + game.chemicalName[game.protonmax] + ' </p>'
 		document.getElementById("elementContainer").innerHTML += '<div class="nucleusContainer"><img src="images/' + game.chemicalName[game.nucleonsCount[0]] + game.nucleonsTot + '.png" height="64px" width="64px" ></div>'
 		document.getElementById("elementContainer").innerHTML += '<p>The actual nucleus is ' + game.chemicalSymbol[game.nucleonsCount[0]] + ' ' + game.nucleonsTot + '</p>'
-		//document.getElementById("elementContainer").innerHTML += '<p>You have collected </p><p>' +  game.decayPartCount[0] + ' ' + game.decayPartNameShort[0] + ', ' + game.decayPartCount[1] + ' ' + game.decayPartNameShort[1] + ', ' + game.decayPartCount[2] + ' ' + game.decayPartNameShort[2] + ', ' + game.decayPartCount[3] + ' ' + game.decayPartNameShort[3] + ', ' + game.decayPartCount[4] + ' ' + game.decayPartNameShort[4] + ' and ' + game.decayPartCount[5] + ' ' + game.decayPartNameShort[5] + '. </p>'
 		document.getElementById("elementContainer").innerHTML += '<p>You have collected </p>'
 		for (i = 0; i < game.decayPartName.length; i++) {
 			document.getElementById("elementContainer").innerHTML += '<p>'+ game.decayPartCount[i]+' <img src="images/' + game.decayPartImage[i] + '" height="10px" width="10px" >' + ' ' + game.decayPartName[i] + '</p> '
@@ -285,9 +317,12 @@ var display = {
 	},
 
 	updateGrid: function () {
-		for (i = 0; i < game.chemicalSeen.length; i++) {
-			for (j = 0; j < game.chemicalSeen[i].length; j++) {
-				if (game.chemicalSeen[i][j] == "true") {
+		canvasinit();
+		canvasPinit();
+		for (i = 0; i < game.isoSeen.length; i++) {
+			visitGridP(i);
+			for (j = 0; j < game.isoSeen[i].length; j++) {
+				if (game.isoSeen[i][j] == "true") {
 					visitGrid(i, j, game.chemicalDecay[i][j],"true");
                 }
 			}
@@ -296,12 +331,31 @@ var display = {
 };
 
 var canvas = document.getElementById("elementCanvas");
+var canvasPeriodic = document.getElementById("periodicCanvas");
 var ctx = canvas.getContext("2d");
-var widou = 6;
-var heightou = 6;
-var rects = [
-	{ x: widou, y: 0, w: widou, h: heightou, color: "rgb(0,0,0)", colorhover: "rgb(100, 100, 100)" }    // etc.
-], i = 0, r;
+var ctxPeriodic = canvasPeriodic.getContext("2d");
+var widou = 5;
+var heightou = 5;
+var widouP = 8;
+var heightouP = 8;
+if (!rectsPeriodic) {
+	var rects = [
+		{ x: widou, y: 0, w: widou, h: heightou, color: "rgb(0,0,0)", colorhover: "rgb(100, 100, 100)" }
+	], i = 0, r, rP;
+}
+if (!rectsPeriodic) {
+	var rectsPeriodic = [];
+	for (i = 0; i < game.chemicalPeriodicPos.length; i++) {
+		rectsPeriodic.push({
+			name: "?", symbol: "", type: game.chemicalPeriodicType[i], Z: "?", x: widouP * game.chemicalPeriodicPos[i][0], y: heightouP * game.chemicalPeriodicPos[i][1], w: widouP, h: heightouP, color: "rgb(150,150,150)", colorhover: "rgb(200, 200, 200)"
+		});
+	}
+	rectsPeriodic[1].name = game.chemicalName[1];
+	rectsPeriodic[1].symbol = game.chemicalSymbol[1];
+	rectsPeriodic[1].Z = 1;
+	rectsPeriodic[1].color = game.periodicTypeColor[game.chemicalPeriodicType[1]];
+	rectsPeriodic[1].colorhover = game.periodicTypeColorHover[game.chemicalPeriodicType[1]];
+}
 
 canvasinit = function () {
 	i = 0;
@@ -312,13 +366,23 @@ canvasinit = function () {
 		ctx.fill();
 	}
 }
+canvasPinit = function () {
+	i = 0;
+	while (rP = rectsPeriodic[i++]) {
+		ctxPeriodic.beginPath();
+		ctxPeriodic.rect(rP.x, rP.y, rP.w, rP.h);
+		ctxPeriodic.fillStyle = rP.color;
+		ctxPeriodic.fill();
+	}
+}
+canvasinit();
+canvasPinit();
 
 canvas.onmousemove = function (e) {
-
 	// important: correct mouse position:
 	var rect = this.getBoundingClientRect(),
-		x = e.pageX - rect.left,
-		y = e.pageY - rect.top,
+		x = e.clientX - rect.left,
+		y = e.clientY - rect.top,
 		i = 0, r;
 
 	while (r = rects[i++]) {
@@ -336,12 +400,38 @@ canvas.onmousemove = function (e) {
 		}
 		ctx.fill();
 	}
+};
 
+canvasPeriodic.onmousemove = function (e) {
+	// important: correct mouse position:
+	var rect = this.getBoundingClientRect(),
+		x = e.clientX - rect.left,
+		y = e.clientY - rect.top,
+		i = 0, rP;
+	while (rP = rectsPeriodic[i++]) {
+		// add a single rect to path:
+		ctxPeriodic.beginPath();
+		ctxPeriodic.rect(rP.x, rP.y, rP.w, rP.h);
+
+		// check if we hover it
+		ctxPeriodic.fillStyle = ctxPeriodic.isPointInPath(x, y) ? rP.colorhover : rP.color;
+		if (ctxPeriodic.isPointInPath(x, y)) {
+			document.querySelector('.modalP').classList.toggle('show');
+			document.querySelector('.modalP').style.left = x + rect.left + 20 + "px";
+			document.querySelector('.modalP').style.top = y + rect.top + 20 + "px";
+			document.getElementById("modalContainerP").innerHTML = '<p>' + rP.name + ' ' + rP.symbol + ' ( Z = '+ rP.Z +' ) </p>'
+		}
+		ctxPeriodic.fill();
+	}
 };
 
 function visitGrid(p, n, decay, updatebool) {
-	if (game.chemicalSeen[p][n] == "false" || updatebool == "true") {
-		game.chemicalSeen[p][n] = "true";
+	if (game.isotopSeen[p][n] == "false" || updatebool == "true") {
+		if (game.chemicalSeen[p] == "false") {
+			game.chemicalSeen[p] = "true";
+			game.totalElement++;
+		}
+		game.isotopSeen[p][n] = "true";
 		game.totalIsotope++;
 		if (decay == "stable") {
 			rects.push({ x: widou * p, y: heightou * n, w: widou, h: heightou, color: "rgb(0, 0, 0)", colorhover: "rgb(100, 100, 100)" });
@@ -368,16 +458,31 @@ function visitGrid(p, n, decay, updatebool) {
 	canvasinit();
 }
 
+function visitGridP(p) {
+	if (game.chemicalSeen[p] == "true") {
+		rectsPeriodic[p].name = game.chemicalName[p];
+		rectsPeriodic[p].symbol = game.chemicalSymbol[p];
+		rectsPeriodic[p].Z = p;
+		rectsPeriodic[p].color = game.periodicTypeColor[game.chemicalPeriodicType[p]];
+		rectsPeriodic[p].colorhover = game.periodicTypeColorHover[game.chemicalPeriodicType[p]];
+	}
+	canvasPinit();
+}
+
 function saveGame() {
 	var gameSave = {
 		rects: rects,
+		rectsPeriodic: rectsPeriodic,
 		protonmax: game.protonmax,
 		neutronmax: game.neutronmax,
+		protonLimNumb: game.protonLimNumb,
 		decayPartCount: game.decayPartCount,
 		chemicalSeen: game.chemicalSeen,
+		isotopSeen: game.isotopSeen,
 		nucleonsCount: game.nucleonsCount,
 		nucleonsTot: game.nucleonsTot,
 		totalIsotope: game.totalIsotope,
+		totalElement: game.totalElement,
 		totalClicks: game.totalClicks,
 		version: game.version,
 		factoriesCount: factories.count,
@@ -397,12 +502,24 @@ function loadGame() {
 				rects[i] = savedGame.rects[i];
 			}
 		}
+		if (typeof savedGame.rectsPeriodic !== "undefined") {
+			for (i = 0; i < savedGame.rectsPeriodic.length; i++) {
+				rectsPeriodic[i] = savedGame.rectsPeriodic[i];
+			}
+		}
 		if (typeof savedGame.protonmax !== "undefined") game.protonmax = savedGame.protonmax;
 		if (typeof savedGame.neutronmax !== "undefined") game.neutronmax = savedGame.neutronmax;
 		if (typeof savedGame.totalIsotope !== "undefined") game.totalIsotope = savedGame.totalIsotope;
+		if (typeof savedGame.protonLimNumb !== "undefined") game.protonLimNumb = savedGame.protonLimNumb;
+		if (typeof savedGame.totalElement !== "undefined") game.totalIsotope = savedGame.totalElement;
 		if (typeof savedGame.decayPartCount !== "undefined") {
 			for (i = 0; i < savedGame.decayPartCount.length; i++) {
 				game.decayPartCount[i] = savedGame.decayPartCount[i];
+			}
+		}
+		if (typeof savedGame.isotopSeen !== "undefined") {
+			for (i = 0; i < savedGame.isotopSeen.length; i++) {
+				game.isotopSeen[i] = savedGame.isotopSeen[i];
 			}
 		}
 		if (typeof savedGame.chemicalSeen !== "undefined") {
@@ -444,6 +561,16 @@ function resetGame() {
 		var gameSave = {};
 		localStorage.setItem("gameSave", JSON.stringify(gameSave));
 		location.reload();
+	}
+};
+
+function hydrogenRestart() {
+	if (confirm("Are you sure you want to go back to Hydrogen ?")) {
+		game.nucleonsCount[0] = 1;
+		game.nucleonsCount[1] = 0;
+		game.nucleonsTot = 1;
+		display.updateNucleons();
+		display.updateElement();
 	}
 };
 
@@ -526,18 +653,26 @@ window.onload = function () {
 setInterval(function () {
 	if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] !== "stable") {
 		if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "b-") {
-			game.nucleonsCount[0]++;
-			game.nucleonsCount[1]--;
-			game.decayPartCount[2]++;
-			display.updateNucleons();
-			display.updateElement();
+			if (game.nucleonsCount[0] + 1 > game.protonLim[game.protonLimNumb]) {
+			}
+			else {
+				game.nucleonsCount[0]++;
+				game.nucleonsCount[1]--;
+				game.decayPartCount[2]++;
+				display.updateNucleons();
+				display.updateElement();
+			}
 		}
 		if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "2b-") {
-			game.nucleonsCount[0]+=2;
-			game.nucleonsCount[1] -= 2;
-			game.decayPartCount[2]+=2;
-			display.updateNucleons();
-			display.updateElement();
+			if (game.nucleonsCount[0] + 2 > game.protonLim[game.protonLimNumb]) {
+			}
+			else {
+				game.nucleonsCount[0] += 2;
+				game.nucleonsCount[1] -= 2;
+				game.decayPartCount[2] += 2;
+				display.updateNucleons();
+				display.updateElement();
+			}
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "b+") {
 			game.nucleonsCount[0]--;
@@ -598,22 +733,30 @@ setInterval(function () {
 			display.updateElement();
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "b-n") {
-			game.nucleonsCount[0]++;
-			game.nucleonsCount[1] -= 2;
-			game.nucleonsTot--;
-			game.decayPartCount[1]++;
-			game.decayPartCount[2]++;
-			display.updateNucleons();
-			display.updateElement();
+			if (game.nucleonsCount[0] + 1 > game.protonLim[game.protonLimNumb]) {
+			}
+			else {
+				game.nucleonsCount[0]++;
+				game.nucleonsCount[1] -= 2;
+				game.nucleonsTot--;
+				game.decayPartCount[1]++;
+				game.decayPartCount[2]++;
+				display.updateNucleons();
+				display.updateElement();
+			}
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "b-2n") {
-			game.nucleonsCount[0]++;
-			game.nucleonsCount[1] -= 3;
-			game.nucleonsTot -= 2;
-			game.decayPartCount[1] += 2;
-			game.decayPartCount[2]++;
-			display.updateNucleons();
-			display.updateElement();
+			if (game.nucleonsCount[0] + 1 > game.protonLim[game.protonLimNumb]) {
+			}
+			else {
+				game.nucleonsCount[0]++;
+				game.nucleonsCount[1] -= 3;
+				game.nucleonsTot -= 2;
+				game.decayPartCount[1] += 2;
+				game.decayPartCount[2]++;
+				display.updateNucleons();
+				display.updateElement();
+			}
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "alpha") {
 			game.nucleonsCount[0] -= 2;
@@ -640,14 +783,14 @@ setInterval(function () {
 			display.updateElement();
 		}
 		visitGrid(game.nucleonsCount[0], game.nucleonsCount[1], game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]], "false");
+		visitGridP(game.nucleonsCount[0]);
 	}
-}, 1000); //1000 = 1 second
 
-setInterval(function () {
 	for (i = 0; i < achievement.name.length; i++) {
 		if (achievement.type[i] == "factories" && factories.count[achievement.objectIndex[i]] >= achievement.requirement[i]) achievement.earn(i);
 		else if (achievement.type[i] == "click" && game.totalClicks >= achievement.requirement[i]) achievement.earn(i);
-		else if (achievement.type[i] == "element" && game.totalIsotope >= achievement.requirement[i]) achievement.earn(i);
+		else if (achievement.type[i] == "isotope" && game.totalIsotope >= achievement.requirement[i]) achievement.earn(i);
+		else if (achievement.type[i] == "element" && game.totalElement >= achievement.requirement[i]) achievement.earn(i);
 	};
 	display.updateAchievements();
 }, 1000); //1000 = 1 second

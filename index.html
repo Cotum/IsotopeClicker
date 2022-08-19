@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
+<body style="background-image: url('images/background.png');">
     <div class="grid-container unselectable">
 
         <div class="grid-item">
@@ -14,6 +14,12 @@
             <div class="scoreContainer">
                 <div id="scoreClickContainer"></div>
             </div>
+            <button onclick="hydrogenRestart();">Restart from hydrogen</button>
+            <p>Periodic table :</p>
+            <p>
+                <canvas id="periodicCanvas" width="200" height="60"></canvas>
+                <div class="modalP" id="modalContainerP"></div>
+            </p>
             <div class="sectionFooter">
                 <p>Isotope Clicker</p>
                 <button onclick="resetGame();">Reset Game</button>
@@ -22,18 +28,20 @@
         <div id="elementContainerup">
             <center>
                 <div id="elementContainer"></div>
-                <p>Isotopic table</p>
-                <canvas id="elementCanvas" width="400" height="600"></canvas>
-                <div class="modal" id="modalContainer"></div>
             </center>
 
         </div>
         <div class="buttonContainer">
             <div id="shopContainer"></div>
         </div>
-        <div id="achievementContainer"></div>
-    </div>
-
+        <div id="achievementContainerup">
+            <p>Achievements obtained :</p>
+            <div id="achievementContainer"></div>
+            <p>Isotopic table :</p>
+            <canvas id="elementCanvas" width="400" height="600"></canvas>
+            <div class="modal" id="modalContainer"></div>
+        </div>
+     </div>
 
 
     <script src="main.js"></script>
