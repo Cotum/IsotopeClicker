@@ -1,0 +1,231 @@
+.grid-container {
+  	display: grid;
+  	grid-template-columns: auto auto auto auto;
+  	background-color: #FFFFFF;
+  	padding: 10px;
+}
+.titleContainer {
+  	background-color: rgba(255, 255, 255, 0.8);
+  	padding: 20px;
+  	font-size: 30px;
+  	text-align: center;
+}
+.scoreContainer {
+	background-color: rgb(255,255,255,0.6);
+	width: 50%;
+	padding: 20px;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	image-rendering: -moz-crisp-edges;
+}
+.elementContainerup {
+	background-color: rgb(255,255,255,0.6);
+	width: 50%;
+	padding: 20px;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	image-rendering: -moz-crisp-edges;
+}
+.buttonContainer {
+	background-color: rgb(255,255,255,0.6);
+	width: 30%;
+	padding: 20px;
+	border-radius: 10px;
+	font-size: 12px;
+	font-weight: bold;
+}
+#achievementContainer img{
+	height: 32px;
+	width: 32px;
+}
+.clickerContainer img{
+	position: relative;
+	transition: all .2s ease-in-out;
+}
+.clickerContainer img:hover{
+	transform: scale(1.10);
+}
+.clickerContainer img:active{
+	transform: scale(0.99);
+}
+
+.clickerbutton {
+	background-size: contain;
+	position: relative;
+	transition: all .2s ease-in-out;
+	height: 128px;
+	width: 128px;
+	image-rendering: -moz-crisp-edges;
+}
+
+.clickerbutton:hover{ transform: scale(1.10);}
+
+.clickerbutton:active {transform: scale(0.99);}
+
+.clickerbutton > .number {
+	z-index: 99;
+	font-size: 20px;
+	font-family: sans-serif;
+	color: white;
+	position: absolute;
+}
+	
+	
+.shopButton{
+	background-color : #d9d9d9;	
+	transition: all .2s ease-in-out;
+	border-radius: 10px;
+	width: 100%;
+	margin: 10px 0px 10px 0px;
+}
+.shopButton:hover{
+	background-color : #c7c7c7;	
+	transition: all .2s ease-in-out;
+}
+.shopButton #image{
+	width: 25%;
+}
+	.shopButton img {
+		height: 64px;
+		width: 64px;
+		image-rendering: -moz-crisp-edges;
+	}
+.shopButton #nameAndCost p{
+	margin : 0px;
+	width : 60%;
+}
+.shopButton #nameAndCost p:first-of-type{
+	font-size: 24px;
+}
+.shopButton #amount{
+	font-size: 48px;
+	color: #595959;
+	font-family: roboto;
+	width: 15%;
+}
+
+.ageButton {
+	background-color: #FFFFFF;
+	transition: all .2s ease-in-out;
+	border-radius: 10px;
+	width: 25%;
+	margin: 10px 0px 10px 0px;
+}
+
+.ageButton:hover {
+	background-color: #ffd800;
+	transition: all .2s ease-in-out;
+}
+
+.ageButton #image {
+	width: 1%;
+}
+
+.ageButton img {
+	height: 32px;
+	width: 32px;
+}
+
+
+.unselectable {
+	-webkit-user-select : none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.sectionFooter {
+	margin-top : 20%;
+}
+
+.floatDiv {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background: #FF3300;
+	width: 10px;
+	height: 10px;
+}
+
+.nucleusContainer {
+	/* Start the shake animation and make the animation last for 0.5 seconds */
+	animation: shake 0.9s ease-out;
+	/* When the animation is finished, start again */
+	animation-iteration-count: infinite;
+	image-rendering: -moz-crisp-edges;
+}
+
+	.nucleusContainer img:hover {
+		transform: scale(1.05);
+	}
+
+	.nucleusContainer img:active {
+		transform: scale(0.99);
+	}
+
+@keyframes shake {
+	0% {
+		transform: translate(0.1px, 0.1px) rotate(0deg);
+	}
+
+	10% {
+		transform: translate(-0.1px, -0.2px) rotate(-0.1deg);
+	}
+
+	20% {
+		transform: translate(-0.3px, 0px) rotate(0.1deg);
+	}
+
+	30% {
+		transform: translate(0.3px, 0.2px) rotate(0deg);
+	}
+
+	40% {
+		transform: translate(0.1px, -0.1px) rotate(0.2deg);
+	}
+
+	50% {
+		transform: translate(-0.1px, 0.2px) rotate(-0.1deg);
+	}
+
+	60% {
+		transform: translate(-0.5px, 0.1px) rotate(0deg);
+	}
+
+	70% {
+		transform: translate(0.3px, 0.1px) rotate(-0.3deg);
+	}
+
+	80% {
+		transform: translate(-0.1px, -0.1px) rotate(0.1deg);
+	}
+
+	90% {
+		transform: translate(0.1px, 0.2px) rotate(0deg);
+	}
+
+	95% {
+		transform: translate(0.1px, -0.2px) rotate(-0.1deg);
+	}
+	95% {
+		transform: translate(0px, 0.2px) rotate(-0.2deg);
+	}
+}
+
+.modal {
+	display: none;
+	position: absolute;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 100;
+	font-size: 14px;
+}
+
+	.modal.show {
+		display: block;
+	}
+
+	.modal.hide {
+		visibility: collapse;
+	}
+

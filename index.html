@@ -1,0 +1,42 @@
+﻿<!DOCTYPE HTML>
+<HTML>
+<head>
+    <title>Isotope Clicker</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="grid-container unselectable">
+
+        <div class="grid-item">
+            <p>Explore the isotope nuclei through clicking.</p>
+            <p>Fusion your nucleus with protons and neutrons.</p>
+            <div class="scoreContainer">
+                <div id="scoreClickContainer"></div>
+            </div>
+            <div class="sectionFooter">
+                <p>Isotope Clicker</p>
+                <button onclick="resetGame();">Reset Game</button>
+            </div>
+        </div>
+        <div id="elementContainerup">
+            <center>
+                <div id="elementContainer"></div>
+                <p>Isotopic table</p>
+                <canvas id="elementCanvas" width="400" height="600"></canvas>
+                <div class="modal" id="modalContainer"></div>
+            </center>
+
+        </div>
+        <div class="buttonContainer">
+            <div id="shopContainer"></div>
+        </div>
+        <div id="achievementContainer"></div>
+    </div>
+
+
+
+    <script src="main.js"></script>
+</body>
+</HTML>
+
