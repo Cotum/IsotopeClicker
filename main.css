@@ -88,7 +88,7 @@
 	transition: all .2s ease-in-out;
 	border-radius: 10px;
 	width: 100%;
-	margin: 10px 0px 10px 0px;
+	margin: 10px 80px 10px 80px;
 	font-size: 12px;
 }
 	.shopButton:hover {
@@ -96,7 +96,7 @@
 		transition: all .2s ease-in-out;
 	}
 .shopButton #image{
-	width: 25%;
+	width: 10%;
 }
 	/*.shopButton img {
 		height: 64px;
@@ -108,7 +108,7 @@
 }
 .shopButton #nameAndCost p{
 	margin : 0px;
-	width : 60%;
+	width : 80%;
 }
 .shopButton #nameAndCost p:first-of-type{
 	font-size: 24px;
@@ -117,7 +117,7 @@
 	font-size: 48px;
 	color: #595959;
 	font-family: roboto;
-	width: 15%;
+	width: 10%;
 }
 
 .unselectable {
