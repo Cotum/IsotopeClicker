@@ -9,10 +9,16 @@ for (var i = 0; i < isoSeen.length; i++) {
 isoSeen[1][0] = "true";
 chemSeen[1] = "true";
 
+var randou = new Array(200);
+for (var i = 0; i < randou.length; i++) {
+	randou[i] = new Array(2).fill(Math.ceil(randomNumber(-1, 1)));
+}
+
 var game = {
 	protonmax: 1,
 	neutronmax: 0,
 	totalIsotope: 1,
+	lowQNuc: 15,
 	decayPartName: ["proton", "neutron", "electron", "positron", "alpha", "gamma"],
 	decayPartNameShort: ["p", "n", "e-", "e+", "a", "g"],
 	decayPartImage: ["proton.png", "neutron.png", "electron.png", "positron.png", "alpha.png", "gamma.png"],
@@ -25,6 +31,7 @@ var game = {
 	name: ["proton", "neutron"],
 	image: ["proton.png", "neutron.png"],
 	color: ["red", "blue"],
+	nucleusColor: ["red", "blue", "black"],
 	chemicalName: ["neutron", "hydrogen", "helium",
 		"lithium", "beryllium", "boron", "carbon", "nitrogen", "oxygen", "fluorine", "neon",
 		"sodium", "magnesium", "aluminium", "silicon", "phosphorus", "sulfur", "chlorine", "argon",
@@ -409,13 +416,31 @@ var display = {
 		if (game.nucleonsCount[0] > game.protonmax) {
 			game.protonmax = game.nucleonsCount[0];
 		}
-		document.getElementById("elementContainer").innerHTML = '<p>The highest element obtained is ' + game.chemicalName[game.protonmax] + ' </p>'
-		document.getElementById("elementContainer").innerHTML += '<div class="nucleusContainer"><img src="images/' + game.chemicalName[game.nucleonsCount[0]] + game.nucleonsTot + '.png" height="64px" width="64px" ></div>'
+		if (game.nucleonsCount[0] < game.lowQNuc) {
+			document.getElementById("elementContainer").innerHTML = '<div class="nucleusContainer"><img src="images/' + game.chemicalName[game.nucleonsCount[0]] + game.nucleonsTot + '.png" height="64px" width="64px" ></div>'
+			nucleusCanvas.hidden = true;
+		}
+		else {
+			document.getElementById("elementContainer").innerHTML = '<div class="nucleusContainer"></div>'
+			nucleusCanvas.hidden = false;
+			canvasNinit();
+		}
 		document.getElementById("elementContainer").innerHTML += '<p>The actual nucleus is ' + game.chemicalSymbol[game.nucleonsCount[0]] + ' ' + game.nucleonsTot + ' ( ' + game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] + ' )</p>'
 		document.getElementById("elementContainer").innerHTML += '<p>You have collected </p>'
 		for (i = 0; i < game.decayPartName.length; i++) {
 			document.getElementById("elementContainer").innerHTML += '<p>' + game.decayPartCount[i] + ' <img src="images/' + game.decayPartImage[i] + '" height="10px" width="10px" >' + ' ' + game.decayPartName[i] + '</p> '
 		}
+		//document.getElementById("parentElement").innerHTML = ""
+		//for (i = game.nucleonsTot; i > game.nucleonsCount[0]; i--) {
+		//	document.getElementById("parentElement").innerHTML += '<img id="neut' + i + '" src="images/neutron1.png">' //'<img  src="images/proton.png" style="top='+i*10+'px"> '
+		//	document.getElementById('neut' + i).style.left = 10 + spiral(i)[0] * 2 + randou[i][0]  + 'px';
+		//	document.getElementById('neut' + i).style.top = 10 + spiral(i)[1] * 2 + randou[i][1] + 'px';
+		//}
+		//for (i = game.nucleonsCount[0]; i > 0; i--) {
+		//	document.getElementById("parentElement").innerHTML += '<img id="prot' + i + '" src="images/hydrogen1.png">' //'<img  src="images/proton.png" style="top='+i*10+'px"> '
+		//	document.getElementById('prot' + i).style.left = 10 + spiral(i)[0] * 2 + randou[i][0] + 'px';
+		//	document.getElementById('prot' + i).style.top = 10 + spiral(i)[1] * 2 + randou[i][1] + 'px';
+		//}
 	},
 
 	updateGrid: function () {
@@ -426,12 +451,14 @@ var display = {
 
 var canvas = document.getElementById("elementCanvas");
 var canvasPeriodic = document.getElementById("periodicCanvas");
+var nucleusCanvas = document.getElementById("nucleusCanvas");
 var ctx = canvas.getContext("2d");
 var ctxPeriodic = canvasPeriodic.getContext("2d");
+var nucleusctx = nucleusCanvas.getContext("2d");
 var widou = 2;
 var heightou = 2;
-var widouP = 24;
-var heightouP = 24;
+var widouP = 20;
+var heightouP = 20;
 if (!rects) {
 	var rects = [
 		{ x: widou, y: 0, w: widou, h: heightou, color: "rgb(0,0,0)", colorhover: "rgb(100, 100, 100)" }
@@ -450,6 +477,10 @@ if (!rectsPeriodic) {
 	rectsPeriodic[1].actualNuc = "true";
 	rectsPeriodic[1].color = game.periodicTypeColor[game.chemicalPeriodicType[1]];
 	rectsPeriodic[1].colorhover = game.periodicTypeColorHover[game.chemicalPeriodicType[1]];
+}
+
+if (!rectsNucleus) {
+	var rectsNucleus = [], rN;
 }
 
 canvasinit = function () {
@@ -481,12 +512,59 @@ canvasPinit = function () {
 		ctxPeriodic.strokeStyle = "black";
 		ctxPeriodic.stroke();
 		ctxPeriodic.fillStyle = "black";
-		ctxPeriodic.font = "12px Arial";
+		ctxPeriodic.font = "10px Arial";
 		ctxPeriodic.fillText(rP.symbol, rP.x + rP.w / 4, rP.y + 3 * rP.h / 4);
 	}
 }
+canvasNinit = function () {
+	if (game.nucleonsCount[0] >= game.lowQNuc) {
+		var pixSize = 3;
+		var maxPix = pixSize * 20;
+		var randouTemp = 0;
+		var nucleusPixCount = [0, 0];
+		var colou = 0;
+		nucleusctx.clearRect(0, 0, 1000, 1000);
+		radius = Math.sqrt(game.nucleonsTot / Math.PI) + 1;
+		for (var i = 10- radius; i < 10 + radius; i++) {
+			for (var j = 10 - radius; j < 10 + radius; j++) {
+				if ((i - 10) ** 2 + (j - 10) ** 2 < radius ** 2) {
+					nucleusctx.fillStyle = "black";
+					nucleusctx.fillRect(i * pixSize, j * pixSize, pixSize, pixSize);
+				}
+			}
+		}
+		rectsNucleus = [];
+		for (var i = 0; i < game.nucleonsTot; i++) {
+			randouTemp = Math.round(randomNumber(0, 1));
+			if (nucleusPixCount[0] >= game.nucleonsCount[0]) {
+				nucleusPixCount[1]++;
+				colou = game.nucleusColor[1];
+			}
+			else if (nucleusPixCount[1] >= game.nucleonsCount[1]) {
+				nucleusPixCount[0]++;
+				colou = game.nucleusColor[0];
+			}
+			else {
+				nucleusPixCount[randouTemp]++;
+				colou = game.nucleusColor[randouTemp];
+			}
+			rectsNucleus.push({ col: colou, x: maxPix / 2 + (spiralround(i)[0] + Math.ceil(randomNumber(-1, 1))) * pixSize, y: maxPix / 2 + (spiralround(i)[1] + Math.ceil(randomNumber(-1, 1))) * pixSize, w: pixSize, h: pixSize });
+		}
+		i = 0;
+		while (rN = rectsNucleus[i++]) {
+			nucleusctx.beginPath();
+			nucleusctx.fillStyle = rN.col;
+			nucleusctx.rect(rN.x, rN.y, rN.w, rN.h);
+			nucleusctx.fill();
+			nucleusctx.closePath();
+		}
+	}
+	else { nucleusctx.clearRect(0, 0, 0, 0); }
+}
+
 canvasinit();
 canvasPinit();
+//canvasNinit();
 
 canvas.onmousemove = function (e) {
 	// important: correct mouse position:
@@ -545,7 +623,7 @@ canvasPeriodic.onmousemove = function (e) {
 		ctxPeriodic.strokeStyle = "black";
 		ctxPeriodic.stroke();
 		ctxPeriodic.fillStyle = "black";
-		ctxPeriodic.font = "12px Arial";
+		ctxPeriodic.font = "10px Arial";
 		ctxPeriodic.fillText(rP.symbol, rP.x + rP.w / 4, rP.y + 3 * rP.h / 4);
 	}
 };
@@ -590,6 +668,7 @@ function visitGrid(p, n, decay, updatebool) {
         }
 	}
 	canvasinit();
+	//canvasNinit();
 }
 
 function visitGridP(p) {
@@ -717,6 +796,7 @@ function hydrogenRestart() {
 		game.nucleonsTot = 1;
 		display.updateNucleons();
 		display.updateElement();
+		canvasNinit();
 	}
 };
 
@@ -730,6 +810,24 @@ function gameOver() {
 
 function randomNumber(min, max) {
 	return Math.round(Math.random() * (max - min) + min);
+}
+
+function spiral(n) {
+	k = Math.ceil((Math.sqrt(n) - 1) / 2);
+	t = 2 * k + 1;
+	m = t**2;
+	t = t - 1;
+	if (n >= m - t) return [k - (m - n), -k];
+	else m = m - t;
+	if (n >= m - t) return [-k, -k + (m - n)];
+	else m = m - t;
+	if (n >= m - t) return [-k + (m - n), k];
+	else return [k, k - (m - n - t)];
+}
+
+function spiralround(n) {
+	r = Math.sqrt(n/Math.PI);
+	return [Math.round(r * Math.cos(n)), Math.round(r * Math.sin(n))];
 }
 
 function fadeOut(element, duration, finalOpacity, calback) {
@@ -850,7 +948,7 @@ setInterval(function () {
 			document.getElementById("decayContainer").innerHTML = '<img class="image3" src = "images/positron.png" > <img class="image1" src="images/neutrino.png">'
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "2b+") {
-			game.nucleonsCount[0]-=2;
+			game.nucleonsCount[0] -= 2;
 			game.nucleonsCount[1] += 2;
 			game.decayPartCount[3] += 2;
 			game.decayPartAll[3] += 2;
@@ -858,7 +956,7 @@ setInterval(function () {
 			display.updateElement();
 			document.getElementById("decayContainer").innerHTML = '<img class="image3" src = "images/positron.png" > <img class="image1" src="images/neutrino.png"><img class="image2" src = "images/positron.png" > <img class="image4" src="images/neutrino.png">'
 		}
-		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "EC" && game.decayPartCount[2]>0) {
+		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "EC" && game.decayPartCount[2] > 0) {
 			game.nucleonsCount[0]--;
 			game.nucleonsCount[1]++;
 			game.decayPartCount[2]--;
@@ -867,8 +965,8 @@ setInterval(function () {
 			document.getElementById("decayContainer").innerHTML = '<img class="image5" src = "images/electron.png"><img class="image7" src = "images/neutrino.png">'
 		}
 		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "2EC" && game.decayPartCount[2] > 1) {
-			game.nucleonsCount[0]-=2;
-			game.nucleonsCount[1]+=2;
+			game.nucleonsCount[0] -= 2;
+			game.nucleonsCount[1] += 2;
 			game.decayPartCount[2] -= 2;
 			display.updateNucleons();
 			display.updateElement();
@@ -985,7 +1083,7 @@ setInterval(function () {
 			display.updateElement();
 			document.getElementById("decayContainer").innerHTML = '<img class="image2" src = "images/alpha.png" > <img class="image3" src="images/positron.png"><img class="image1" src="images/neutrino.png">'
 		}
-		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == ""){
+		else if (game.chemicalDecay[game.nucleonsCount[0]][game.nucleonsCount[1]] == "") {
 			game.nucleonsCount[0] = 1;
 			game.nucleonsCount[1] = 0;
 			game.nucleonsTot = 1;
@@ -1009,7 +1107,7 @@ setInterval(function () {
 	for (i = 0; i < game.decayPartCount.length; i++) {
 		game.decayPartCount[i] += game.decayPartPerSec[i];
 		game.decayPartAll[i] += game.decayPartPerSec[i];
-    }
+	}
 	display.updateElement();
 
 }, 1000); //1000 = 1 second

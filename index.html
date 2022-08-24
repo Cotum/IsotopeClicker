@@ -15,29 +15,37 @@
                 <div id="scoreClickContainer"></div>
             </div>
             <button onclick="hydrogenRestart();">Restart from hydrogen</button>
-
+            <p>Periodic table :</p>
+            <canvas id="periodicCanvas" width="400" height="220"></canvas>
+            <div class="modalP" id="modalContainerP"></div>
 
             <div class="sectionFooter">
                 <p>Isotope Clicker</p>
                 <button onclick="resetGame();">Reset Game</button>
             </div>
         </div>
-        <div id="elementContainerup">
+        <div class="elementContainerup">
             <center>
+                <div class="nucleusContainer2">
+                    <canvas id="nucleusCanvas" width="64" height="64"></canvas>
+                </div>
                 <div id="elementContainer"></div>
                 <div id="decayContainer"></div>
+                <!--<div class="parentElementup">
+        <div id="parentElement">
+        </div>
+    </div>-->
+
+
             </center>
 
         </div>
 
-        <div id="achievementContainerup">
+        <div class="achievementContainerup">
             <p>Achievements obtained :</p>
             <div id="achievementContainer"></div>
-            <p>Periodic table :</p>
-            <canvas id="periodicCanvas" width="500" height="220"></canvas>
-            <div class="modalP" id="modalContainerP"></div>
             <p>Isotopic table :</p>
-            <canvas id="elementCanvas" width="500" height="450"></canvas>
+            <canvas id="elementCanvas" width="300" height="450"></canvas>
             <div class="modal" id="modalContainer"></div>
         </div>
         <div class="buttonContainer">
