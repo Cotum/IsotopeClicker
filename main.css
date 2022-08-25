@@ -4,38 +4,59 @@
   	/*background-color: #FFFFFF;*/
   	padding: 10px;
 }
+.nucleonContainer {
+	background-color: rgba(255, 255, 200, 0.2);
+	padding: 0px 50px 0px 0px;
+	font-size: 14px;
+	text-align: center;
+	box-sizing: border-box;
+	border-radius: 10px;
+	/*font-family: 'Arial Rounded MT';*/
+	font-family: Arial, Helvetica, sans-serif;
+}
+.elementContainerup {
+	background-color: rgb(200,255,255,0.2);
+	width: 100%;
+	padding: 0px 0px 0px 0px;
+	border-radius: 10px;
+	font-size: 14px;
+	border-radius: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.achievementContainerup {
+	background-color: rgb(200,200,255,0.2);
+	width: 50%;
+	padding: 0px 100px 0px 0px;
+	border-radius: 10px;
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+#shopContainer {
+	background-color: rgba(255, 200, 255, 0.2);
+	width: 100%;
+	padding: 0px 120px 0px 0px;
+	font-size: 14px;
+	text-align: center;
+	border-radius: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.restartContainer {
+	display: inline;
+}
 .titleContainer {
-  	background-color: rgba(255, 255, 255, 0.8);
-  	padding: 20px;
-  	font-size: 30px;
-  	text-align: center;
+	background-color: rgba(255, 255, 255, 0.8);
+	padding: 20px;
+	font-size: 30px;
+	text-align: center;
 }
 .scoreContainer {
 	background-color: rgb(255,255,255,0);
-	width: 50%;
-	padding: 20px;
-	border-radius: 10px;
+	width: 100%;
+	padding: 0px;
+	border-radius: 0px;
 	font-size: 14px;
 	font-weight: bold;
 	image-rendering: -moz-crisp-edges;
-}
-.elementContainerup {
-	background-color: rgb(255,255,255,0.);
-	width: 100%;
-	padding: 10px 1px 10px 1px;
-	border-radius: 10px;
-	font-size: 14px;
-	/*font-weight: bold;
-	image-rendering: -moz-crisp-edges;*/
-}
-.achievementContainerup {
-	background-color: rgb(255,255,255,0.);
-	width: 50%;
-	padding: 10px 1px 10px 50px;
-	border-radius: 10px;
-	font-size: 14px;
-	/*font-weight: bold;
-	image-rendering: -moz-crisp-edges;*/
 }
 .buttonContainer {
 	/*background-color: rgb(255,255,255,0.6);*/
@@ -50,7 +71,7 @@
 	height: 16px;
 	width: 16px;
 }
-.clickerContainer img{
+.clickerContainer img {
 	position: relative;
 	transition: all .2s ease-in-out;
 }
@@ -86,9 +107,9 @@
 .shopButton {
 	background-color: rgb(0,0,0,0.05);
 	transition: all .2s ease-in-out;
-	border-radius: 10px;
-	width: 100%;
-	margin: 10px 80px 10px 80px;
+	border-radius: 20px;
+	width: 150%;
+	margin: 0px 0px 5px 0px;
 	font-size: 12px;
 }
 	.shopButton:hover {
@@ -141,7 +162,7 @@
 
 .nucleusContainer {
 	/* Start the shake animation and make the animation last for 0.5 seconds */
-	animation: shake 0.9s ease-out;
+	animation: shake2 0.9s ease-out;
 	/* When the animation is finished, start again */
 	animation-iteration-count: infinite;
 	image-rendering: -moz-crisp-edges;
@@ -199,38 +220,6 @@
 	95% {transform: translate(0.4px, -0.8px) rotate(-0.4deg);}
 	100% {transform: translate(0px, 0.8px) rotate(-0.8deg);}
 }
-
-.modal {
-	display: none;
-	position: absolute;
-	background: rgba(255, 255, 255, 0.5);
-	z-index: 100;
-	font-size: 14px;
-}
-
-	.modal.show {
-		display: block;
-	}
-
-	.modal.hide {
-		visibility: collapse;
-	}
-
-.modalP {
-	display: none;
-	position: absolute;
-	background: rgba(255, 255, 255, 0.5);
-	z-index: 100;
-	font-size: 14px;
-}
-
-	.modalP.show {
-		display: block;
-	}
-
-	.modalP.hide {
-		visibility: collapse;
-	}
 
 .parent img {
 	animation: slide 0.5s ease-out;
@@ -449,35 +438,60 @@
 	}
 }
 
-/*.parentElement {
-	position: relative;
-	z-index: 100;
-	margin-bottom: 10px;
-}
-
-	.parentElement > img {
-		width: 20px;
-		z-index: 1;
-	}
-#parentElement {
-	position: relative;
-	z-index: 100;
-	margin-bottom: 10px;
-}
-#parentElement > img {
+.modal {
+	display: none;
 	position: absolute;
-	z-index: 1;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 100;
+	font-size: 14px;
 }
 
-		.parentElement > img:first-child {
-			position: absolute;
-			width: 20px;
-			margin: 5px;
-		}
+	.modal.show {
+		display: block;
+	}
 
-	.parentElement img:nth-child(4n+1) {
-		position: absolute;
-		top: 0px;
-		left: -5px;
-	}*/
+	.modal.hide {
+		visibility: collapse;
+	}
 
+.modalP {
+	display: none;
+	position: absolute;
+	background: rgba(255, 255, 255, 0.5);
+	z-index: 100;
+	font-size: 14px;
+}
+
+	.modalP.show {
+		display: block;
+	}
+
+	.modalP.hide {
+		visibility: collapse;
+	}
+
+.collapsible {
+	background-color: rgb(100,100,255,0.2);
+	border-radius: 10px;
+	font-weight: bold;
+	color: rgb(0,0,0,1);
+	cursor: pointer;
+	padding: 5px;
+	width: 100%;
+	border: none;
+	text-align: center;
+	outline: none;
+	font-size: 15px;
+}
+
+	.active, .collapsible:hover {
+		background-color: rgb(150,150,255,0.2);
+	}
+
+.buttonLead {
+	display: none;
+}
+
+	.buttonLead.show {
+		display: inline;
+	}

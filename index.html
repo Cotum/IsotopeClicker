@@ -8,49 +8,63 @@
 <body style="background-image: url('images/background.png');">
     <div class="grid-container unselectable">
 
-        <div class="grid-item">
-            <p>Explore the isotope nuclei through clicking.</p>
-            <p>Fusion your nucleus with protons and neutrons.</p>
-            <div class="scoreContainer">
-                <div id="scoreClickContainer"></div>
-            </div>
-            <button onclick="hydrogenRestart();">Restart from hydrogen</button>
-            <p>Periodic table :</p>
-            <canvas id="periodicCanvas" width="400" height="220"></canvas>
-            <div class="modalP" id="modalContainerP"></div>
+        <div class="nucleonContainer">
+            <button class="header collapsible">Nucleons and periodic table</button>
+            <div>
+                <p>Explore the isotope nuclei through clicking.</p>
+                <p>Fusion your nucleus with protons and neutrons.</p>
+                <div class="scoreContainer">
+                    <div id="scoreClickContainer"></div>
+                </div>
+                <div class="restartContainer">
+                    <button onclick="hydrogenRestart();">Restart from hydrogen</button>
+                    <button class="buttonLead" onclick="leadRestart();">Go to lead 208</button>
+                </div>
+                <p>Periodic table :</p>
+                <canvas id="periodicCanvas" width="360" height="240"></canvas>
+                <div class="modalP" id="modalContainerP"></div>
 
-            <div class="sectionFooter">
-                <p>Isotope Clicker</p>
-                <button onclick="resetGame();">Reset Game</button>
+                <div class="sectionFooter">
+                    <p>Isotope Clicker</p>
+                    <button onclick="resetGame();">Reset Game</button>
+                </div>
             </div>
         </div>
         <div class="elementContainerup">
-            <center>
-                <div class="nucleusContainer2">
-                    <canvas id="nucleusCanvas" width="64" height="64"></canvas>
-                </div>
-                <div id="elementContainer"></div>
-                <div id="decayContainer"></div>
-                <!--<div class="parentElementup">
-        <div id="parentElement">
-        </div>
-    </div>-->
+            <button class="header collapsible">Nucleus and particles</button>
+            <div>
+                <center>
+                    <div class="nucleusContainer2">
+                        <canvas id="nucleusCanvas" width="64" height="64"></canvas>
+                    </div>
+                    <div id="elementContainer"></div>
+                    <div id="decayContainer"></div>
+                    <!--<div class="parentElementup">
+                    <div id="parentElement">
+                    </div>
+                </div>-->
 
 
-            </center>
-
-        </div>
-
-        <div class="achievementContainerup">
-            <p>Achievements obtained :</p>
-            <div id="achievementContainer"></div>
-            <p>Isotopic table :</p>
-            <canvas id="elementCanvas" width="300" height="450"></canvas>
-            <div class="modal" id="modalContainer"></div>
+                </center>
+            </div>
         </div>
         <div class="buttonContainer">
-            <div id="shopContainer"></div>
+            <button class="header collapsible">Factories </button>
+            <div>
+                <div id="shopContainer"></div>
+            </div>
         </div>
+        <div class="achievementContainerup">
+            <button class="header collapsible">Achievements and isotopic table</button>
+            <div>
+                <p>Achievements obtained :</p>
+                <div id="achievementContainer"></div>
+                <p>Isotopic table :</p>
+                <canvas id="elementCanvas" width="360" height="550"></canvas>
+                <div class="modal" id="modalContainer"></div>
+            </div>
+        </div>
+
     </div>
 
 
